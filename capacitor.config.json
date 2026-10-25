@@ -1,0 +1,8 @@
+{
+  "appId": "com.applylabpremium7.rakuchinder.loan",
+  "appName": "ローン計算ラクチンダー",
+  "webDir": "dist",
+  "backgroundColor": "#101f35",
+  "loggingBehavior": "debug",
+  "android": {"backgroundColor": "#101f35", "zoomEnabled": true}
+}

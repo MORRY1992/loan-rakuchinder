@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101f35">
+<meta name="description" content="ローンの月々の返済額・利息総額・総返済額を無料でシミュレーション。元利均等・元金均等、金利0%〜20%、返済予定表に対応。ローン計算ラクチンダー。">
+<title>ローン返済シミュレーション｜毎月の返済額・利息を計算｜ラクチンダー</title>
+<style>
+:root{--navy:#101f35;--navy2:#203855;--red:#d64237;--gold:#ecc36f;--paper:#f7f5ef;--ink:#192c43;--muted:#5d6876;--line:#e0e2e4;--ad-space:92px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#e6e9ed;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}[hidden]{display:none!important}button,input{font:inherit}button,a,input{touch-action:manipulation}button{cursor:pointer}a{color:#204a79;text-underline-offset:3px}button:focus-visible,input:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #bd8024;outline-offset:4px}.app{max-width:520px;margin:auto;background:var(--paper);min-height:100vh}button:hover{filter:brightness(.97)}
+.masthead{background:var(--navy);color:#fff;padding:calc(17px + env(safe-area-inset-top,0px)) max(22px,env(safe-area-inset-right,0px)) 25px max(22px,env(safe-area-inset-left,0px));position:relative;overflow:hidden}.masthead:after{content:"";position:absolute;right:-75px;top:56px;width:235px;height:235px;transform:rotate(25deg);border:1px solid #ecc36f22;box-shadow:0 0 0 24px #ecc36f08,0 0 0 49px #ecc36f05;pointer-events:none}.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:27px;font-size:10px;letter-spacing:.13em;color:#c9d3e0}.series{font-weight:750;letter-spacing:.16em}.edition{border:1px solid #667183;border-radius:20px;padding:3px 9px;white-space:nowrap;font-size:10px;letter-spacing:0}.hero-layout{display:flex;align-items:center;gap:14px;position:relative;z-index:1}.emblem{width:80px;flex:none;filter:drop-shadow(0 5px 8px #0003)}.hero-copy{min-width:0}.kicker{font-size:12px;color:var(--gold);letter-spacing:.06em;margin:0 0 3px;font-weight:700}h1{margin:0;line-height:1.1}.loan-name{display:block;font-size:15px;letter-spacing:.14em;font-weight:700;margin-bottom:7px}.hero-name{display:block;font-size:clamp(25px,7.4vw,36px);font-weight:950;letter-spacing:-.055em;transform:skew(-5deg);text-shadow:2px 2px 0 #0004}.hero-description{margin:21px 0 0;color:#d9e1ec;font-size:13px}.hero-description strong{color:#fff}.hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.hero-tags span{font-size:10px;color:#f3deb4;border:1px solid #b6a27c66;border-radius:4px;padding:3px 8px;background:#ffffff05}.nav{display:flex;justify-content:center;gap:32px;padding:12px 16px;background:#fff;border-bottom:1px solid var(--line);font-size:12px;font-weight:750}.nav a{color:var(--ink);text-decoration:none}.nav a:first-child{color:#b3332b}
+main{padding:23px max(18px,env(safe-area-inset-right,0px)) calc(28px + var(--ad-space) + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}.intro{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:17px}.intro h2{font-size:18px;margin:0}.intro span{font-size:11px;color:var(--muted)}.card{background:#fff;border:1px solid #e0e2e4;border-radius:17px;padding:20px;box-shadow:0 4px 16px #14263f04}.step-title{display:flex;gap:9px;align-items:center;margin:0 0 14px;font-size:14px;font-weight:800}.step-number{display:grid;place-items:center;width:23px;height:23px;border-radius:6px;background:var(--navy);color:var(--gold);font-size:11px;letter-spacing:.02em}.field{margin-bottom:23px}.field:last-child{margin-bottom:0}.input-unit{display:flex;align-items:center;gap:10px}.input-unit input{min-width:0;flex:1}.unit{font-size:13px;font-weight:700;white-space:nowrap}input[type=number]{width:100%;min-height:55px;padding:10px 13px;border:1px solid #d9dfe7;border-radius:10px;background:#f7f9fc;color:var(--navy);font-size:23px;font-weight:750;font-variant-numeric:tabular-nums}input[aria-invalid=true]{border-color:#b42e2e;background:#fff4f4}.amount-preview{margin:7px 0 0;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.help{font-size:11px;line-height:1.7;color:var(--muted);margin:9px 0 0}input[type=range]{width:100%;height:30px;margin:12px 0 0;accent-color:#ac7625;cursor:pointer}.range-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.preset{border:1px solid var(--line);border-radius:8px;background:#fff;color:#43546b;font-size:11px;min-height:44px;padding:6px 6px;flex:1 0 28%;white-space:nowrap}.preset strong{display:block;color:var(--navy);font-size:14px}.preset[aria-pressed=true]{border-color:#b78b3a;background:#fff8e8;box-shadow:inset 0 0 0 1px #b78b3a}.duration{display:grid;grid-template-columns:1fr 1fr;gap:14px}.duration>div{min-width:0}.duration label{font-size:11px;color:var(--muted);display:block;margin-bottom:5px}.duration-preview{font-size:11px;color:var(--muted);margin:7px 0 0}fieldset{padding:0;margin:0;border:0;min-width:0}legend{padding:0}.methods{display:grid;grid-template-columns:1fr 1fr;gap:8px}.method{border:1px solid #d9dfe7;padding:12px 8px;border-radius:10px;cursor:pointer;text-align:center;background:#fff}.method-name{display:flex;justify-content:center;align-items:center;gap:5px;font-size:13px;font-weight:750}.method input{accent-color:#b78b3a;margin:0}.method small{display:block;font-size:10px;margin-top:4px;color:var(--muted)}.method:has(input:checked){border-color:var(--navy);background:#f0f3f8;box-shadow:inset 0 0 0 1px var(--navy)}.calculate{display:flex;align-items:center;justify-content:center;gap:13px;width:100%;border:0;min-height:57px;border-radius:12px;background:var(--red);color:white;margin-top:18px;font-size:16px;font-weight:800;box-shadow:0 5px 0 #9c3029}.calculate span{font-size:23px;font-weight:400}.status{margin:13px 0 0;color:var(--muted);font-size:11px;min-height:18px}.errors{padding:13px 15px;margin-top:14px;border:1px solid #e7b4b4;border-radius:10px;background:#fff1f1;color:#9b2525;font-size:12px}.errors p{font-weight:800;margin:0}.errors ul{margin:5px 0 0;padding-left:18px}
+#result{scroll-margin-top:16px;margin-top:25px}.result-topline{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:11px}.result-topline h2{font-size:17px;margin:0}.complete{font-size:10px;font-weight:800;color:#2c6751;border-radius:20px;padding:3px 9px;background:#e6f2ea}.result-card{background:var(--navy);border-radius:17px;color:#fff;padding:22px 20px;position:relative;overflow:hidden;border-top:4px solid var(--gold)}.result-card.pulse{animation:appear .35s ease-out}@keyframes appear{from{transform:translateY(7px);opacity:.4}to{transform:translateY(0);opacity:1}}.result-label{margin:0 0 6px;font-size:12px;color:#d6dfeb}.payment{margin:0;font-size:clamp(26px,8.5vw,39px);line-height:1.4;letter-spacing:-.04em;font-weight:850;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.payment.principal{font-size:clamp(22px,6.6vw,30px)}.payment .arrow{display:inline-block;margin:0 8px;color:var(--gold);font-size:22px}.result-note{font-size:11px;color:#c0cddd;margin:7px 0 0}.breakdown{display:flex;gap:4px;height:7px;border-radius:8px;overflow:hidden;margin:21px 0 8px;background:#43546a}.breakdown .capital{background:var(--gold);min-width:1px}.breakdown .interest{background:#e57b70}.bar-legend{display:flex;justify-content:space-between;font-size:10px;color:#d3dce8}.bar-legend b{color:var(--gold);font-weight:700}.bar-legend .interest-key{color:#f6a79e}.totals{margin:16px 0 0}.totals div{display:flex;justify-content:space-between;align-items:baseline;gap:6px 12px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid #ffffff20}.totals div:last-child{border:0;padding-bottom:0}.totals dt{font-size:12px;color:#c8d4e4}.totals dd{margin:0;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.totals .total dd{color:var(--gold);font-size:22px}.copy-button{display:block;width:100%;min-height:45px;border:1px solid #d1d8e1;border-radius:10px;background:#fff;color:var(--navy);font-size:12px;font-weight:750;margin:12px 0 0}.copy-help{font-size:11px;color:var(--muted);margin:7px 0 0}.copy-fallback{width:100%;height:120px;font:inherit;font-size:12px;margin-top:10px;border:1px solid var(--line);border-radius:8px;padding:10px}.schedule{margin-top:12px;border:1px solid #d9dfe7;border-radius:11px;background:#fff;overflow:hidden}.schedule summary{padding:14px;font-size:13px;font-weight:750;cursor:pointer}.table-help{margin:0;padding:0 14px 10px;color:var(--muted);font-size:11px}.table-scroll{max-height:360px;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}table{width:100%;min-width:530px;border-collapse:separate;border-spacing:0;font-size:12px;font-variant-numeric:tabular-nums}th,td{padding:11px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid #e5e9ed}thead th{position:sticky;top:0;background:var(--navy);color:#fff;z-index:1}tbody th{font-weight:400}tbody tr:nth-child(even){background:#f4f6f9}caption{position:absolute;width:1px;height:1px;overflow:hidden}
+.info-section{margin-top:29px;scroll-margin-top:16px}.info-section h2{font-size:16px;margin:0 0 12px}.guide-list{margin:0;padding-left:22px;font-size:12px;color:#43546b}.guide-list li{padding-left:4px;margin:0 0 9px}.info-section h3{font-size:13px;margin:17px 0 5px}.info-section p{font-size:12px;margin:7px 0;color:var(--muted)}.faq{border-bottom:1px solid var(--line);padding:12px 0;font-size:12px}.faq summary{cursor:pointer;font-weight:700}.faq p{padding:3px 0 0}.footer{border-top:1px solid #d7dbe1;margin-top:28px;padding-top:20px;text-align:center}.footer .tagline{color:var(--ink);font-size:13px;font-weight:800}.footer p{font-size:10px;color:var(--muted);margin:6px 0}.footer a{font-size:11px}.legal{margin-top:18px;text-align:left}.legal summary{cursor:pointer;font-size:11px;color:var(--muted);padding:7px 0}.legal p{font-size:11px;line-height:1.8}.legal h3{font-size:12px;margin:12px 0 4px}.ad-wrap{position:fixed;z-index:8;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,520px);padding:8px max(14px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));background:#fff;border-top:1px solid #d9dfe7}.ad-slot{min-height:60px;display:grid;place-content:center;text-align:center;border:1px dashed #c1c8d0;border-radius:7px;background:#f9fafb;color:#667384;font-size:10px}.ad-slot strong{font-size:11px;letter-spacing:.08em}.skip{position:absolute;top:-100px;left:12px;z-index:30;background:#fff;color:var(--navy);padding:10px}.skip:focus{top:10px} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}@media(max-width:350px){.card{padding:15px}.emblem{width:62px}.hero-layout{gap:10px}.masthead{padding-left:18px;padding-right:18px}.topline{letter-spacing:0}.method-name{font-size:12px}}
+</style>
+</head>
+<body>
+<a href="#calculator" class="skip">計算フォームへ進む</a>
+<div class="app">
+  <header class="masthead">
+    <div class="topline"><span class="series">RAKUCHINDER SERIES / 01</span><span class="edition">無料で使える</span></div>
+    <div class="hero-layout">
+      <svg class="emblem" viewBox="0 0 100 112" aria-hidden="true"><path d="M50 4 91 20 85 71Q74 96 50 108 26 96 15 71L9 20Z" fill="#ecc36f"/><path d="M50 12 82 25 77 68Q69 88 50 99 31 88 23 68L18 25Z" fill="#233b57"/><path d="m56 23-29 37h20l-7 28 33-44H53Z" fill="#ecc36f"/><path d="m72 22 10 4-3 23-10-5Z" fill="#d64237"/><path d="m20 26 10-4 4 16-12 5Z" fill="#fff" opacity=".75"/></svg>
+      <div class="hero-copy"><p class="kicker">めんどうに、助っ人。</p><h1><span class="loan-name">ローン計算</span><span class="hero-name">ラクチンダー</span></h1></div>
+    </div>
+    <p class="hero-description">月々いくら？ 利息はいくら？<br><strong>ローンの見通し、まとめてラクに計算。</strong></p>
+    <div class="hero-tags"><span>登録不要</span><span>元利・元金均等に対応</span><span>返済予定表つき</span></div>
+  </header>
+  <nav class="nav" aria-label="ページ内メニュー"><a href="#calculator">ローンを計算</a><a href="#guide">使い方</a><a href="#faq">よくある質問</a></nav>
+  <main>
+    <section id="calculator" aria-labelledby="formHeading">
+      <div class="intro"><h2 id="formHeading">まずは借入条件を入力</h2><span>かんたん4ステップ</span></div>
+      <form id="loanForm" novalidate>
+        <div class="card">
+          <div class="field"><label class="step-title" for="amount"><span class="step-number">01</span>借入金額</label><div class="input-unit"><input id="amount" type="number" inputmode="decimal" min="0.0001" max="100000000" step="0.0001" required value="3000" aria-describedby="amountPreview amountHelp"><span class="unit">万円</span></div><p id="amountPreview" class="amount-preview"></p><p class="help" id="amountHelp">例：100万円なら「100」。小数点以下4桁（1円単位）まで。</p></div>
+          <div class="field"><label class="step-title" for="rate"><span class="step-number">02</span>年利</label><div class="input-unit"><input id="rate" type="number" inputmode="decimal" min="0" max="20" step="0.01" required value="0.80" aria-describedby="presetHelp"><span class="unit">%</span></div><input id="rateSlider" type="range" min="0" max="20" step="0.01" value="0.80" aria-label="年利をスライダーで調整"><div class="range-labels"><span>0%</span><span>20%</span></div><div class="presets" aria-label="比較用の金利プリセット"><button type="button" class="preset" data-rate="0.8" aria-pressed="true">住宅ローン<strong>0.8%</strong></button><button type="button" class="preset" data-rate="2.5" aria-pressed="false">自動車ローン<strong>2.5%</strong></button><button type="button" class="preset" data-rate="2" aria-pressed="false">教育ローン<strong>2.0%</strong></button><button type="button" class="preset" data-rate="15" aria-pressed="false">カードローン<strong>15.0%</strong></button><button type="button" class="preset" data-rate="20" aria-pressed="false">入力上限<strong>20%</strong></button></div><p id="presetHelp" class="help">比較用の仮の目安値です。現在の適用金利・法定上限を示すものではありません。</p></div>
+          <fieldset class="field"><legend class="step-title"><span class="step-number">03</span>返済期間</legend><div class="duration"><div><label for="years">年数</label><div class="input-unit"><input id="years" type="number" inputmode="numeric" min="0" max="50" step="1" required value="35"><span class="unit">年</span></div></div><div><label for="months">追加月数</label><div class="input-unit"><input id="months" type="number" inputmode="numeric" min="0" max="11" step="1" required value="0"><span class="unit">ヶ月</span></div></div></div><p id="durationPreview" class="duration-preview"></p><p class="help">合計1〜600ヶ月。50年の場合、追加月数は0です。</p></fieldset>
+          <fieldset class="field" id="methodField"><legend class="step-title"><span class="step-number">04</span>返済方式</legend><div class="methods"><label class="method"><span class="method-name"><input type="radio" name="method" value="annuity" checked>元利均等</span><small>月々の返済額が原則一定</small></label><label class="method"><span class="method-name"><input type="radio" name="method" value="principal">元金均等</span><small>元金分が原則一定</small></label></div></fieldset>
+        </div>
+        <div id="errors" class="errors" role="alert" hidden></div><button type="submit" class="calculate">返済額を計算する <span aria-hidden="true">→</span></button><p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <section id="result" aria-labelledby="resultHeading" hidden>
+      <div class="result-topline"><h2 id="resultHeading">あなたの返済シミュレーション</h2><span class="complete">計算完了</span></div>
+      <div class="result-card" id="resultCard"><p class="result-label" id="paymentLabel">毎月の返済額</p><p class="payment" id="paymentValue"></p><p class="result-note" id="paymentNote"></p><div class="breakdown" aria-hidden="true"><span class="capital" id="capitalBar"></span><span class="interest" id="interestBar"></span></div><div class="bar-legend"><span><b>●</b> 元金</span><span><b class="interest-key">●</b> 利息 <span id="interestRatio"></span></span></div><dl class="totals"><div><dt>借入金額</dt><dd id="principalValue"></dd></div><div><dt>利息総額</dt><dd id="interestValue"></dd></div><div class="total"><dt>総返済額</dt><dd id="totalValue"></dd></div></dl></div>
+      <button id="copyResult" type="button" class="copy-button">計算結果をコピー</button><p id="copyStatus" class="copy-help" role="status"></p><textarea id="copyFallback" class="copy-fallback" readonly aria-label="計算結果・選択してコピーできます" hidden></textarea>
+      <details class="schedule" id="scheduleDetails"><summary id="scheduleTitle">返済予定表を開く</summary><p class="table-help">金額は円単位。表の中を上下・左右にスクロールできます。</p><div class="table-scroll" tabindex="0" role="region" aria-label="返済予定表・スクロール領域"><table><caption>毎月の返済予定表（単位：円）</caption><thead><tr><th scope="col">回数</th><th scope="col">返済額</th><th scope="col">元金</th><th scope="col">利息</th><th scope="col">残高</th></tr></thead><tbody id="scheduleBody"></tbody></table></div></details>
+      <p class="help">計算結果は目安です。正確な金額は各金融機関にご確認ください。</p>
+    </section>
+    <section class="info-section" id="guide"><h2>使い方は、これだけ。</h2><div class="card"><ol class="guide-list"><li><strong>借入金額・年利・返済期間を入力。</strong><br>年利はスライダーでも調整できます。</li><li><strong>返済方式を選んで計算。</strong><br>月々の返済額・利息・総返済額を確認します。</li><li><strong>条件を変えて、もう一度。</strong><br>返済予定表で、毎月の残高も確認できます。</li></ol><p class="help">借入の申込みや金融商品の紹介・仲介を行うサービスではありません。</p></div></section>
+    <section class="info-section" id="faq"><h2>よくある質問</h2><details class="faq"><summary>元利均等と元金均等、何が違う？</summary><p>元利均等は元金と利息を合わせた返済額が原則一定です。元金均等は毎月返す元金分が原則一定で、そこに残高に応じた利息を加算します。本ツールではどちらも最終回に元金の端数を調整します。</p></details><details class="faq"><summary>金利0%でも計算できる？</summary><p>はい。利息は0円として元金を返済回数で割り、円単位で四捨五入します。最終回で残高が0円になるように調整します。</p></details><details class="faq"><summary>金融機関の返済額と違うのはなぜ？</summary><p>利息の日割り、端数処理、返済日、手数料などの条件が異なるためです。本ツールは全期間固定金利・毎月返済で、月利を年利÷12として計算します。毎月の利息と通常返済額（元金均等では元金分）を四捨五入します。</p></details><details class="faq"><summary>カードローンやリボ払いにも使える？</summary><p>決まった金額を固定金利・固定回数で返す場合の参考試算に使えます。追加借入、残高スライド、日割り利息、リボ払い固有のルールは再現していません。カードローンのプリセットは金利の入力補助です。</p></details><details class="faq"><summary>入力した借入金額は保存される？</summary><p>この準備版は入力内容をブラウザー内で計算し、入力値の保存や外部送信を行いません。「計算結果をコピー」は、ご自身の操作で端末のクリップボードへ書き込みます。</p></details></section>
+    <section class="info-section"><h2>計算に含まれる条件</h2><p>全期間固定金利・毎月返済を仮定します。ボーナス返済、繰上返済、日割り計算、金利変動、手数料、保証料、保険料は含みません。</p><p>借入金額は1円〜1兆円、年利は0〜20%、期間は1〜600ヶ月に対応。ごく少額では円単位の丸めにより、途中完済や返済額0円の回が生じることがあります。</p><p><strong>計算結果は目安です。正確な金額は各金融機関にご確認ください。</strong></p></section>
+    <footer class="footer"><p class="tagline">めんどうに、助っ人。</p><p>RAKUCHINDER SERIES / ローン計算ラクチンダー</p><details class="legal" id="privacy"><summary>プライバシー・利用上の注意</summary><h3>入力データ</h3><p>本準備版はアカウント登録不要です。借入金額などは端末内で計算し、サーバーへ送信・保存しません。アクセス解析、広告SDK、課金SDKは未導入です。公開先の配信事業者が通常のアクセスログを扱う場合があります。</p><h3>コピー機能</h3><p>コピーを押した場合のみ、計算結果をクリップボードに書き込みます。クリップボードの読み取りは行いません。</p><h3>広告と課金</h3><p>現在の広告欄は仮枠で、広告は配信していません。Android版の広告除去課金も未接続です。導入前にデータ取扱いと購入条件の記載を更新します。</p><h3>利用上の注意</h3><p>金融機関の商品条件を再現するものではなく、個別の借入判断や返済能力を保証しません。結果はご自身の条件と金融機関の案内を照合してください。</p><p>更新日：2026年10月25日</p></details><details class="legal"><summary>このサービスについて</summary><p>めんどうな計算を分かりやすくする「ラクチンダー」シリーズの第1号です。月々の返済額と総利息の見通しを知るための計算ツールとして制作しています。</p><p>公開準備版 v0.1.0。運営者表示・お問い合わせ窓口は一般公開前に設定します。</p></details><p>© 2026 ラクチンダー</p></footer>
+    <noscript><p>計算するにはJavaScriptを有効にしてください。</p></noscript>
+  </main>
+</div>
+<aside id="adWrap" class="ad-wrap" aria-label="広告スペース・現在は仮枠"><div class="ad-slot"><strong>ADVERTISEMENT</strong><span id="adNote">広告掲載予定スペース（現在は配信していません）</span></div></aside>
+<script>
+"use strict";
+// 開発用の表示スイッチです。利用者向け無料広告除去スイッチではありません。
+// Androidの購入確認・購入復元と広告SDKの制御は別途実装します。
+const AD_FREE = false;
+/* SHARED_CALCULATION_CORE */
+const $ = id => document.getElementById(id);
+const form = $('loanForm');
+const fmt = new Intl.NumberFormat('ja-JP');
+const yen = value => fmt.format(value) + '円';
+const presets = [...document.querySelectorAll('.preset')];
+let lastCopyText = '';
+$('adWrap').hidden = AD_FREE;
+document.documentElement.style.setProperty('--ad-space', AD_FREE ? '0px' : '92px');
+function updateHints() {
+  const raw = $('amount').value.trim(), amount = Number(raw);
+  $('amountPreview').textContent = raw && Number.isFinite(amount) && amount > 0 && amount <= 1e8 ? '= ' + yen(Math.round(amount * 10000)) : '';
+  const y = $('years').value.trim(), m = $('months').value.trim();
+  const total = Number(y) * 12 + Number(m);
+  $('durationPreview').textContent = y && m && Number.isInteger(total) && total >= 1 && total <= 600 ? '合計 ' + fmt.format(total) + '回の毎月返済' : '';
+}
+function syncPresets() {
+  const rate = $('rate').value.trim() === '' ? NaN : Number($('rate').value);
+  presets.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.rate) === rate)));
+}
+function markChanged() {
+  if (!$('result').hidden) $('status').textContent = '条件を変更しました。「返済額を計算する」を押してください。';
+  $('result').hidden = true; $('errors').hidden = true;
+  $('copyFallback').hidden = true; $('copyStatus').textContent = ''; lastCopyText = '';
+  form.querySelectorAll('[aria-invalid]').forEach(input => input.removeAttribute('aria-invalid'));
+  updateHints();
+}
+form.addEventListener('input', markChanged);
+form.addEventListener('change', markChanged);
+$('rate').addEventListener('input', () => {
+  const value = Number($('rate').value);
+  if ($('rate').value.trim() && Number.isFinite(value) && value >= 0 && value <= 20) $('rateSlider').value = String(value);
+  syncPresets();
+});
+$('rateSlider').addEventListener('input', () => { $('rate').value = Number($('rateSlider').value).toFixed(2); syncPresets(); });
+presets.forEach(button => button.addEventListener('click', () => {markChanged(); $('rate').value = Number(button.dataset.rate).toFixed(2); $('rateSlider').value = button.dataset.rate; syncPresets();}));
+function renderErrors(issues) {
+  $('errors').replaceChildren();
+  const title = document.createElement('p'); title.textContent = '入力内容を確認してください';
+  const list = document.createElement('ul');
+  issues.forEach(issue => { const li = document.createElement('li'); li.textContent = issue.message; list.append(li); const field = $(issue.field); if (field) field.setAttribute('aria-invalid', 'true'); });
+  $('errors').append(title, list); $('errors').hidden = false; $('result').hidden = true; $('status').textContent = '';
+  const first = $(issues[0].field); if (first) first.focus();
+}
+function render(data, rows) {
+  const first = rows[0], last = rows.at(-1);
+  const interest = rows.reduce((sum,row) => sum + row.interest,0);
+  const total = rows.reduce((sum,row) => sum + row.payment,0);
+  const isPrincipal = data.method === 'principal';
+  $('paymentLabel').textContent = isPrincipal ? '毎月の返済額｜初回 → 最終回' : '毎月の返済額';
+  $('paymentValue').classList.toggle('principal', isPrincipal);
+  $('paymentValue').replaceChildren();
+  if (isPrincipal) {
+    const a = document.createElement('span'); a.textContent = yen(first.payment);
+    const arrow = document.createElement('span'); arrow.className = 'arrow'; arrow.textContent = '→';
+    const b = document.createElement('span'); b.textContent = yen(last.payment);
+    $('paymentValue').append(a,arrow,b);
+  } else $('paymentValue').textContent = yen(first.payment);
+  $('paymentNote').textContent = isPrincipal ? '全' + data.months + '回。最終回は元金の端数を調整。' : '全' + data.months + '回・原則同額。最終回 ' + yen(last.payment) + '（端数調整）。';
+  $('principalValue').textContent = yen(data.principal); $('interestValue').textContent = yen(interest); $('totalValue').textContent = yen(total);
+  $('capitalBar').style.width = data.principal / total * 100 + '%'; $('interestBar').style.width = interest / total * 100 + '%';
+  $('interestRatio').textContent = (interest / total * 100).toFixed(1) + '%';
+  const fragment = document.createDocumentFragment();
+  rows.forEach(row => {const tr = document.createElement('tr');const head = document.createElement('th');head.scope = 'row';head.textContent = fmt.format(row.number);tr.append(head);[row.payment,row.capital,row.interest,row.balance].forEach(value=>{const td=document.createElement('td');td.textContent=fmt.format(value);tr.append(td);});fragment.append(tr);});
+  $('scheduleBody').replaceChildren(fragment); $('scheduleTitle').textContent = '返済予定表を開く（全' + data.months + '回）'; $('scheduleDetails').open = false;
+  $('result').hidden = false;
+  $('resultCard').classList.remove('pulse');
+  requestAnimationFrame(()=> $('resultCard').classList.add('pulse'));
+  $('status').textContent = '計算しました。初回 ' + yen(first.payment) + '・総返済額 ' + yen(total) + '。';
+  lastCopyText = ['ローン計算ラクチンダー','借入金額：'+yen(data.principal),'年利：'+(data.rateBp/100).toFixed(2)+'%','返済期間：'+data.months+'ヶ月','返済方式：'+(isPrincipal?'元金均等':'元利均等'),'初回返済額：'+yen(first.payment),'最終回返済額：'+yen(last.payment),'利息総額：'+yen(interest),'総返済額：'+yen(total),'計算結果は目安です。正確な金額は各金融機関にご確認ください。'].join('\n');
+}
+function calculate(scroll) {
+  form.querySelectorAll('[aria-invalid]').forEach(input=>input.removeAttribute('aria-invalid'));
+  const {issues,data} = validateLoan({amount:$('amount').value,rate:$('rate').value,years:$('years').value,months:$('months').value,method:form.querySelector('[name=method]:checked')?.value});
+  if(issues.length){renderErrors(issues);return;}
+  $('errors').hidden = true; $('copyFallback').hidden = true; $('copyStatus').textContent = '';
+  render(data,buildSchedule(data.principal,data.rateBp,data.months,data.method));
+  if(scroll) $('result').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+}
+form.addEventListener('submit',event=>{event.preventDefault();calculate(true);});
+$('copyResult').addEventListener('click',async()=>{
+  if(!lastCopyText)return;
+  try{if(!navigator.clipboard?.writeText)throw new Error('Clipboard unavailable');await navigator.clipboard.writeText(lastCopyText);$('copyStatus').textContent='計算結果をコピーしました。';}
+  catch{$('copyFallback').value=lastCopyText;$('copyFallback').hidden=false;$('copyFallback').focus();$('copyFallback').select();$('copyStatus').textContent='下の結果を選択してコピーしてください。';}
+});
+updateHints();syncPresets();calculate(false);
+</script>
+</body>
+</html>

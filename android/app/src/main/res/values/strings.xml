@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ローン計算ラクチンダー</string>
+    <string name="title_activity_main">ローン計算ラクチンダー</string>
+    <string name="package_name">com.applylabpremium7.rakuchinder.loan</string>
+    <string name="custom_url_scheme">com.applylabpremium7.rakuchinder.loan</string>
+</resources>
