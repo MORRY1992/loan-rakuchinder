@@ -12,25 +12,27 @@
 - 360pxのiframeで表示確認。実効表示幅345pxで横はみ出しなし。
 - Android用のオリジナル盾アイコン・起動画面を作成。
 - Capacitor 8.5.3のAndroidプロジェクト生成・Web資産同期。
+- GitHub登録・Cloudflare Pages公開完了：https://loan-rakuchinder.pages.dev/
+- 公開サイトで120万円・0%・12回（月10万円、利息0円）と12%・元金均等（初回112,000円→最終101,000円、残高0円）を確認。
+- GitHub Actionsでテスト用APK・未署名AABをビルド成功。
+  https://github.com/MORRY1992/loan-rakuchinder/actions/runs/40157004730
+  アーティファクト：loan-rakuchinder-test-build。ストア提出用の署名は未実施。
 
 ## 未完了・未確認
-- GitHub専用リポジトリ作成済み。ソース登録済み。Cloudflare Pagesは未接続。
-- 一般公開URL、運営者表示、お問い合わせ窓口の確定。
+- 運営者表示・お問い合わせ窓口の確定。
 - 実機のノッチ・キーボード・戻るボタン・オフライン動作確認。
-- AndroidのAPK/AABビルド・署名・インストールは未実施。
+- Androidのリリース署名・実機へのインストールは未実施。
 - Google Play Consoleのログイン状態は未確認。アクセス時に自動承認レビューが拒否。
-  入力URLはplay.google.comだが、ブラウザー側がgoogle.playと判定したため、再試行・迂回は実施しない。
+  入力URLはplay.google.comだが、ブラウザー側がgoogle.playと判定した。ユーザー承認後の接続も自動レビューに拒否され、以後は迂回しない。
 - AdSense、AdMob、Google Play Billing、同意管理、広告除去・購入復元は未接続。
 - 広告欄は仮枠。AD_FREEは開発用定数で、実課金の代替ではない。
 - アプリ識別子 com.applylabpremium7.rakuchinder.loan は作業用候補。最初のストアアップロード前に確定する。
 - 商標・Google Play内での名称重複の最終確認。
 
-## Webで次に必要な利用者の操作
-1. Cloudflare PagesでGitHubリポジトリ `MORRY1992/loan-rakuchinder` を接続する。
-2. フレームワーク：なし。ビルドコマンド：空欄。出力ディレクトリ：`dist`。
-3. プロジェクト名候補：`loan-rakuchinder`（使用可否はCloudflareで確認）。
-4. デプロイ後のURLをこのチャットに伝える。
-5. こちらで公開動作を確認し、運営者表示・問い合わせ・プライバシー表示を確定して一般向け案内を開始。
+## Webの次工程
+1. Web公開・基本動作確認は完了。
+2. 運営者表示と問い合わせ窓口を確定し、プライバシー案内を公開運用に合わせる。
+3. Web版の広告導入はAdSenseの審査・広告設定を別途確認して進める。
 
 ## Androidの次工程
 1. Google Play Console接続先判定を解消し、ユーザーの接続許可後に状態確認。
@@ -40,4 +42,5 @@
 5. AdMob・広告除去課金（目安300円）・購入復元を実装し、データ取扱い表示を更新。
 6. 署名AABを生成し、実機確認後にテスト配布へ進む。
 
-有料契約・購入は行っていない。ストア登録や公開・審査申請は実施していない。
+有料契約・購入は行っていない。Web版は公開済み。Google Playへのストア登録・公開・審査申請は実施していない。
+
