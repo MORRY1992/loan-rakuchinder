@@ -14,14 +14,15 @@
 - Capacitor 8.5.3のAndroidプロジェクト生成・Web資産同期。
 - GitHub登録・Cloudflare Pages公開完了：https://loan-rakuchinder.pages.dev/
 - 公開サイトで120万円・0%・12回（月10万円、利息0円）と12%・元金均等（初回112,000円→最終101,000円、残高0円）を確認。
-- GitHub Actionsでテスト用APK・未署名AABをビルド成功。
-  https://github.com/MORRY1992/loan-rakuchinder/actions/runs/40157004730
-  アーティファクト：loan-rakuchinder-test-build。ストア提出用の署名は未実施。
+- v0.2.0のテスト用APK・AABと、Javaの購入署名検証テストが成功。
+  https://github.com/MORRY1992/loan-rakuchinder/actions/runs/40158922598
+- アップロード用の専用署名鍵を作成し、AABを署名。公式JDKツールで署名検証成功。
+- テスト用APK、署名付きAAB、非公開の署名鍵バックアップ、公開アップロード証明書を保存。署名鍵・パスワードはGitHubに登録していない。
 
 ## 未完了・未確認
 - 運営者表示・お問い合わせ窓口の確定。
 - 実機のノッチ・キーボード・戻るボタン・オフライン動作確認。
-- Androidのリリース署名・実機へのインストールは未実施。
+- Androidの実機へのインストール・実購入・復元の動作確認は未実施。
 - Google Play Consoleのログイン状態は未確認。アクセス時に自動承認レビューが拒否。
   入力URLはplay.google.comだが、ブラウザー側がgoogle.playと判定した。ユーザー承認後の接続も自動レビューに拒否され、以後は迂回しない。
 - Webの広告は未導入。AndroidはAdMob・Google Play Billing・UMP・広告除去・購入復元の初期実装を追加。本番ID設定と実機検証は未完了。
@@ -40,12 +41,13 @@
 3. 新規「ローン計算ラクチンダー」の登録とストア情報を整える。
 4. 開発者アカウント側の条件を確認し、必要なテスト経路を選択。
 5. AdMob・広告除去課金（目安300円）・購入復元を実装し、データ取扱い表示を更新。
-6. 署名AABを生成し、実機確認後にテスト配布へ進む。
+6. 署名済みAABを用意済み。実機確認と管理画面の設定後にテスト配布へ進む。
 
 有料契約・購入は行っていない。Web版は公開済み。Google Playへのストア登録・公開・審査申請は実施していない。
 
 ## Android v0.2.0の追加準備
 - ネイティブSDK、署名付き購入情報の検証、購入確認と復元、同意管理、Android専用UIを追加。
-- ビルドとJava暗号検証テストはGitHub Actionsで実行する。結果は実行履歴を参照。
+- ビルドとJavaの購入署名検証テストはGitHub Actionsで成功。テスト用APKと未署名AABのCI成果物から、署名済みAABを作成・検証した。
 - 設定項目と残る実機検証は docs/ANDROID_SETUP.md。
 - プライバシーポリシーを privacy.html として用意。
+
