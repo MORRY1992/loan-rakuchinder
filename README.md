@@ -1,7 +1,7 @@
 # ローン計算ラクチンダー
 
 「めんどうに、助っ人。」ラクチンダーシリーズ第1号。
-WebとAndroidの共通ソース。現在は公開準備版で、広告・課金は未接続。
+WebとAndroidの共通ソース。Web版は公開済み。Android版は広告・課金の初期実装を追加し、テスト中。
 
 ## まず画面を見る
 `dist/index.html` をChromeで開く。HTML/CSS/JavaScriptが1ファイルに収まっており、外部ライブラリは不要。
@@ -29,7 +29,7 @@ npm run android:open
 ```
 WindowsにAndroid Studio、対応するJDK・Android SDKを準備する。
 アプリID候補：`com.applylabpremium7.rakuchinder.loan`。
-まだ署名・実機確認・APK/AABビルドを行っていない。
+v0.1.0のAPK・未署名AABはビルド成功。v0.2.0はネイティブ広告・課金・同意管理を追加。署名・実機の確認・本番ID設定は別途必要。
 ストア用アプリIDは最初のアップロード前に確定する。
 
 ## 計算モデル
@@ -49,3 +49,6 @@ Google Play Billingによる広告除去と購入復元を別途実装する。
 
 詳しい完了・未完了・次の操作は `docs/RELEASE_STATUS.md`。
 公式参考：https://capacitorjs.com/docs/getting-started
+
+Androidの版ごとの動作と管理画面で必要な設定は `docs/ANDROID_SETUP.md`。
+Android専用HTMLは `scripts/prepare-android.mjs` で生成する。Web版の単一HTMLにはネイティブSDKを埋め込まない。

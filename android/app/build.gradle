@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+// Override with Gradle properties only after AdMob / Play Console setup.
+def liveAppId = providers.gradleProperty('rakuchinderAdmobAppId').getOrElse('')
+def liveBannerId = providers.gradleProperty('rakuchinderBannerId').getOrElse('')
+def playPublicKey = providers.gradleProperty('rakuchinderPlayPublicKey').getOrElse('')
+def billingEnabled = providers.gradleProperty('rakuchinderBillingEnabled').getOrElse('false') == 'true' && !playPublicKey.isEmpty()
+def productionAds = !liveAppId.isEmpty() && !liveBannerId.isEmpty() && !liveAppId.contains('3940256099942544') && !liveBannerId.contains('3940256099942544')
+def javaString = { value -> '"' + value.replace('\\', '\\\\').replace('"', '\\"') + '"' }
+
 android {
     namespace = "com.applylabpremium7.rakuchinder.loan"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -7,8 +15,11 @@ android {
         applicationId "com.applylabpremium7.rakuchinder.loan"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.2.0"
+        buildConfigField 'boolean', 'BILLING_ENABLED', billingEnabled.toString()
+        buildConfigField 'String', 'PLAY_PUBLIC_KEY', javaString(playPublicKey)
+        buildConfigField 'String', 'AD_FREE_PRODUCT_ID', '"remove_ads"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,8 +27,19 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    buildFeatures { buildConfig true }
     buildTypes {
+        debug {
+            buildConfigField 'boolean', 'ADS_ENABLED', 'true'
+            buildConfigField 'boolean', 'TEST_ADS', 'true'
+            buildConfigField 'String', 'BANNER_UNIT_ID', '"ca-app-pub-3940256099942544/9214589741"'
+            resValue 'string', 'admob_app_id', 'ca-app-pub-3940256099942544~3347511713'
+        }
         release {
+            buildConfigField 'boolean', 'ADS_ENABLED', productionAds.toString()
+            buildConfigField 'boolean', 'TEST_ADS', 'false'
+            buildConfigField 'String', 'BANNER_UNIT_ID', javaString(liveBannerId)
+            resValue 'string', 'admob_app_id', productionAds ? liveAppId : 'ca-app-pub-3940256099942544~3347511713'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -31,6 +53,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-ads:25.5.0'
+    implementation 'com.google.android.ump:user-messaging-platform:4.0.0'
+    implementation 'com.android.billingclient:billing:9.1.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"

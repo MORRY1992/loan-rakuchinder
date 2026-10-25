@@ -24,7 +24,7 @@
 - Androidのリリース署名・実機へのインストールは未実施。
 - Google Play Consoleのログイン状態は未確認。アクセス時に自動承認レビューが拒否。
   入力URLはplay.google.comだが、ブラウザー側がgoogle.playと判定した。ユーザー承認後の接続も自動レビューに拒否され、以後は迂回しない。
-- AdSense、AdMob、Google Play Billing、同意管理、広告除去・購入復元は未接続。
+- Webの広告は未導入。AndroidはAdMob・Google Play Billing・UMP・広告除去・購入復元の初期実装を追加。本番ID設定と実機検証は未完了。
 - 広告欄は仮枠。AD_FREEは開発用定数で、実課金の代替ではない。
 - アプリ識別子 com.applylabpremium7.rakuchinder.loan は作業用候補。最初のストアアップロード前に確定する。
 - 商標・Google Play内での名称重複の最終確認。
@@ -44,3 +44,8 @@
 
 有料契約・購入は行っていない。Web版は公開済み。Google Playへのストア登録・公開・審査申請は実施していない。
 
+## Android v0.2.0の追加準備
+- ネイティブSDK、署名付き購入情報の検証、購入確認と復元、同意管理、Android専用UIを追加。
+- ビルドとJava暗号検証テストはGitHub Actionsで実行する。結果は実行履歴を参照。
+- 設定項目と残る実機検証は docs/ANDROID_SETUP.md。
+- プライバシーポリシーを privacy.html として用意。

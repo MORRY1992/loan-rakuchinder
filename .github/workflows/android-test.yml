@@ -40,16 +40,16 @@ jobs:
       - name: Verify calculations and build shared HTML
         run: npm test && npm run build
       - name: Sync Android assets
-        run: npx cap sync android
+        run: npm run android:sync
       - name: Build test APK and unsigned release bundle
         working-directory: android
-        run: ./gradlew --no-daemon :app:assembleDebug :app:bundleRelease
+        run: ./gradlew --no-daemon :app:testDebugUnitTest :app:assembleDebug :app:bundleRelease
       - name: Prepare clearly labelled outputs
         run: |
           mkdir -p build-output
           cp android/app/build/outputs/apk/debug/app-debug.apk build-output/loan-rakuchinder-test.apk
           cp android/app/build/outputs/bundle/release/app-release.aab build-output/loan-rakuchinder-UNSIGNED.aab
-          printf '%s\n' 'Test APK: for device testing only. Ads and billing are not connected.' 'UNSIGNED AAB: not ready for Google Play upload. Release signing and device checks are required.' > build-output/READ-ME.txt
+          printf '%s\n' 'Test APK: contains official test ads. Purchases remain disabled until Play product and license key are configured.' 'UNSIGNED AAB: not ready for Google Play upload. Release signing and device checks are required. Production ads are disabled without production AdMob IDs.' > build-output/READ-ME.txt
           cd build-output
           sha256sum *.apk *.aab > SHA256SUMS.txt
       - uses: actions/upload-artifact@v7
