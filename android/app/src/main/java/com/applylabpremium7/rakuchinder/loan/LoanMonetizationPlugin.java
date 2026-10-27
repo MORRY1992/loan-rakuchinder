@@ -336,7 +336,14 @@ public class LoanMonetizationPlugin extends Plugin implements PurchasesUpdatedLi
 
     @Override protected void handleOnResume() {
         if (banner != null) banner.resume();
-        if (billing != null && billing.isReady()) queryOwned(null);
+        if (billing != null) {
+            if (billing.isReady()) {
+                queryOwned(null);
+                queryProduct(null);
+            } else {
+                connectBilling();
+            }
+        }
         maybeStartAds();
     }
     @Override protected void handleOnPause() { if (banner != null) banner.pause(); }
