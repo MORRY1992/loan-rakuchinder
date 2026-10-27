@@ -15,8 +15,8 @@ android {
         applicationId "com.applylabpremium7.rakuchinder.loan"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "0.2.0"
+        versionCode 3
+        versionName "0.2.1"
         buildConfigField 'boolean', 'BILLING_ENABLED', billingEnabled.toString()
         buildConfigField 'String', 'PLAY_PUBLIC_KEY', javaString(playPublicKey)
         buildConfigField 'String', 'AD_FREE_PRODUCT_ID', '"remove_ads"'
