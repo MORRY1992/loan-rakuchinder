@@ -6,3 +6,5 @@ await writeFile(new URL('../dist/index.html', import.meta.url), template.replace
 await copyFile(new URL('../src/privacy.html', import.meta.url), new URL('../dist/privacy.html', import.meta.url));
 await copyFile(new URL('../src/ads.txt', import.meta.url), new URL('../dist/ads.txt', import.meta.url));
 console.log('Built dist/index.html (standalone HTML, no external libraries or network requests).');
+
+for (const f of ["brand-icon.svg","site-icon.png"]) await copyFile(new URL("../src/"+f,import.meta.url),new URL("../dist/"+f,import.meta.url));
