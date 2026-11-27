@@ -42,6 +42,15 @@ main{padding:23px max(18px,env(safe-area-inset-right,0px)) calc(28px + var(--ad-
   .footer{margin-top:36px}.footer p,.footer a{font-size:12px}.ad-wrap{width:min(100%,1120px)}
 }
 @media(max-width:59.999rem){.result-pending{display:none}}
+
+.repayment-desk { margin:22px 0; padding:16px 0; border-block:3px double #8a9e95; }
+.repayment-desk h3 { margin:0; font-size:1.25rem; color:#244639; }
+.repayment-desk table { table-layout:fixed; min-width:0; width:100%; border-collapse:collapse; background:#fffdf6; color:#263d34; }
+.repayment-desk th,.repayment-desk td { white-space:normal; overflow-wrap:anywhere; text-align:start; padding:9px 6px; border-bottom:1px solid #b1beb5; font-variant-numeric:tabular-nums; }
+.repayment-desk caption { text-align:left; padding:8px 0; }
+.repayment-desk thead th { background:#334d40; color:white; }
+.repayment-desk button { min-height:44px; padding:8px 12px; cursor:pointer; }
+.schedule-actions { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
 </style>
 <meta name="application-name" content="ローン計算ラクチンダー"><meta name="apple-mobile-web-app-title" content="ローン計算ラクチンダー"><meta property="og:site_name" content="ローン計算ラクチンダー"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "@id": "https://loan-rakuchinder.pages.dev/#website", "name": "ローン計算ラクチンダー", "alternateName": "loan-rakuchinder.pages.dev", "url": "https://loan-rakuchinder.pages.dev/"}</script><link rel="icon" href="/brand-icon.svg" type="image/svg+xml"><link rel="icon" href="/site-icon.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="/site-icon.png"><link rel="canonical" href="https://loan-rakuchinder.pages.dev/"></head>
 <body>
@@ -78,6 +87,14 @@ main{padding:23px max(18px,env(safe-area-inset-right,0px)) calc(28px + var(--ad-
       <p id="resultConditions" class="result-conditions"></p>
       <div class="result-card" id="resultCard"><p class="result-label" id="paymentLabel">毎月の返済額</p><p class="payment" id="paymentValue"></p><p class="result-note" id="paymentNote"></p><div class="breakdown" aria-hidden="true"><span class="capital" id="capitalBar"></span><span class="interest" id="interestBar"></span></div><div class="bar-legend"><span><b>●</b> 元金</span><span><b class="interest-key">●</b> 利息 <span id="interestRatio"></span></span></div><dl class="totals"><div><dt>借入金額</dt><dd id="principalValue"></dd></div><div><dt>利息総額</dt><dd id="interestValue"></dd></div><div class="total"><dt>総返済額</dt><dd id="totalValue"></dd></div></dl></div>
       <button id="copyResult" type="button" class="copy-button">計算結果をコピー</button><p id="copyStatus" class="copy-help" role="status"></p><textarea id="copyFallback" class="copy-fallback" readonly aria-label="計算結果・選択してコピーできます" hidden></textarea>
+      <section class="repayment-desk" aria-labelledby="comparisonHeading">
+      <h3 id="comparisonHeading">2案の返済比較</h3>
+      <p>今の試算を案Aとして保持し、年利や期間を変えて再計算すると案Bと比較できます。このページを閉じると保持した試算は消えます。</p>
+      <button type="button" id="pinPlan">この条件を案Aにする</button>
+      <p role="status" id="compareStatus"></p>
+      <div id="planComparison" hidden><table><caption>借入条件と返済途中の残高</caption>
+      <thead><tr><th scope="col">項目</th><th scope="col">案A・保持した試算</th><th scope="col">案B・現在の試算</th></tr></thead>
+      <tbody id="compareBody"></tbody></table><div class="schedule-actions"><button type="button" id="savePlans">2案の月別返済表をCSVで保存</button><button type="button" id="unpinPlan">案Aを解除</button></div></div></section>
       <details class="schedule" id="scheduleDetails"><summary id="scheduleTitle">返済予定表を開く</summary><p class="table-help">金額は円単位。表の中を上下・左右にスクロールできます。</p><div class="table-scroll" tabindex="0" role="region" aria-label="返済予定表・スクロール領域"><table><caption>毎月の返済予定表（単位：円）</caption><thead><tr><th scope="col">回数</th><th scope="col">返済額</th><th scope="col">元金</th><th scope="col">利息</th><th scope="col">残高</th></tr></thead><tbody id="scheduleBody"></tbody></table></div></details>
       <p class="help">計算結果は目安です。正確な金額は各金融機関にご確認ください。</p>
     </section>
@@ -195,11 +212,79 @@ function renderErrors(issues) {
   $('errors').append(title, list); $('errors').hidden = false; $('result').hidden = true; $('status').textContent = '';
   const first = $(issues[0].field); if (first) first.focus();
 }
+let comparisonBase = null;
+let currentPlan = null;
+const conditions = plan => [
+  yen(plan.data.principal),
+  '年' + (plan.data.rateBp / 100).toFixed(2) + '%',
+  plan.data.months + '回',
+  plan.data.method === 'principal' ? '元金均等' : '元利均等'
+].join('・');
+
+function showComparison() {
+  const section = $('planComparison');
+  section.hidden = !comparisonBase;
+  $('pinPlan').hidden = Boolean(comparisonBase);
+  if (!comparisonBase) return;
+  const plans = [comparisonBase, currentPlan];
+  const mid = Math.max(1, Math.ceil(Math.min(...plans.map(plan => plan.rows.length)) / 2));
+  const rows = [
+    ['借入条件', ...plans.map(conditions)],
+    ['初回の返済額', ...plans.map(plan => yen(plan.rows[0].payment))],
+    [mid + '回返済後の残高', ...plans.map(plan => yen(plan.rows[mid - 1].balance))],
+    ['利息合計', ...plans.map(plan => yen(plan.interest))],
+    ['総返済額', ...plans.map(plan => yen(plan.total))]
+  ];
+  const body = $('compareBody');
+  body.replaceChildren();
+  for (const [label, ...values] of rows) {
+    const tr = body.insertRow();
+    const th = document.createElement('th');
+    th.scope = 'row';
+    th.textContent = label;
+    tr.append(th);
+    for (const value of values) tr.insertCell().textContent = value;
+  }
+}
+$('pinPlan').addEventListener('click', () => {
+  comparisonBase = currentPlan;
+  showComparison();
+  $('compareStatus').textContent = '案Aを保持しました。入力条件を変更して再計算すると、案Bと比べられます。';
+});
+$('unpinPlan').addEventListener('click', () => {
+  comparisonBase = null;
+  showComparison();
+  $('compareStatus').textContent = '案Aを解除しました。';
+  $('pinPlan').focus();
+});
+$('savePlans').addEventListener('click', () => {
+  if (!comparisonBase || !currentPlan) return;
+  const csv = ['案,借入額,年利％,返済回数,返済方式,回,返済額,元金,利息,残高'];
+  for (const [index, plan] of [comparisonBase, currentPlan].entries()) {
+    const {principal, rateBp, months, method} = plan.data;
+    for (const row of plan.rows) csv.push([
+      index === 0 ? 'A' : 'B', principal, (rateBp / 100).toFixed(2), months,
+      method === 'principal' ? '元金均等' : '元利均等',
+      row.number, row.payment, row.capital, row.interest, row.balance
+    ].join(','));
+  }
+  const url = URL.createObjectURL(new Blob(['\uFEFF' + csv.join('\r\n')], {type:'text/csv;charset=utf-8'}));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = '返済表-2案.csv';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+});
+
 function render(data, rows) {
   $('resultPending').hidden = true;
   const first = rows[0], last = rows.at(-1);
   const interest = rows.reduce((sum,row) => sum + row.interest,0);
   const total = rows.reduce((sum,row) => sum + row.payment,0);
+  currentPlan = {data, rows, interest, total};
+  showComparison();
   const isPrincipal = data.method === 'principal';
   $('resultConditions').textContent = '試算条件：借入 ' + yen(data.principal) + ' ／ 年利 ' + (data.rateBp / 100).toFixed(2) + '% ／ ' + data.months + 'ヶ月 ／ ' + (isPrincipal ? '元金均等' : '元利均等');
   $('paymentLabel').textContent = isPrincipal ? '毎月の返済額｜初回 → 最終回' : '毎月の返済額';
